@@ -168,7 +168,7 @@ int main()
                             tryAgain = true;
                             clearCinError();
                         }   
-                        else if(!(extraPoint >= 0 && extraPoint <= range) )
+                        else if(!(extraPoint >= 0 && extraPoint <= 10) )
                         {
                             cout<<"Invalid input!!"<<endl;
                             tryAgain = true;
