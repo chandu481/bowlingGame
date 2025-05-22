@@ -72,6 +72,29 @@ int printResult(vector<int>& scores, int round)
     return total;
 }
 
+int getInput(int tryNo, int range)
+{
+    int s = 0;
+    bool tryAgain = false;
+    do {
+        tryAgain = false;
+        cout<<"Enter try "<<tryNo<<"(0-"<<range<<"): ";
+        cin>>s;
+        if (cin.fail()) 
+        {
+            tryAgain = true;
+            clearCinError();
+        }   
+        else if(!(s >= 0 && s <= range) )
+        {
+            cout<<"Invalid input!!"<<endl;
+            tryAgain = true;
+        }
+    }while(tryAgain);
+
+    return s;
+}
+
 int main() 
 {
     vector<int> scores;
@@ -81,68 +104,26 @@ int main()
     {
         
         cout<<"---------- Round "<<i<<" -------------"<<endl;
-        bool tryAgain = false;
-        do {
-            tryAgain = false;
-            cout<<"Enter try 1 (0-10): ";
-            cin>>s1;
-            if (cin.fail()) 
-            {
-                tryAgain = true;
-                clearCinError();
-            }   
-            else if(!(s1 >= 0 && s1 <= 10) )
-            {
-                cout<<"Invalid input!!"<<endl;
-                tryAgain = true;
-            }
-        }while(tryAgain);
-        
+        int range = 10;
+        int tryNo = 1;
+        s1 = getInput(tryNo, range);
         scores.push_back(s1);
-        int range = 10-s1;
+        
+        range = 10-s1;
         total = printResult(scores, i);
         if(s1 != 10 || i == 10)
         {
             if(i == 10)
             {
-                bool tryAgain = false;
-                do {
-                    tryAgain = false;
-                    cout<<endl;
-                    cout<<"Enter try 2 (0-10): ";
-                    cin>>s2;
-                    if (cin.fail()) 
-                    {
-                        tryAgain = true;
-                        clearCinError();
-                    }      
-                    else if(!(s2 >= 0 && s2 <= 10) )
-                    {
-                        cout<<"Invalid input!!"<<endl;
-                        tryAgain = true;
-                    }
-                }while(tryAgain);
-                
+                tryNo = 2;
+                range = 10;
+                cout<<endl;
+                s2 = getInput(tryNo, range);
             }
             else 
             {
-                bool tryAgain = false;
-                do {
-                    tryAgain = false;
-                    //cout<<endl;
-                    cout<<"Enter try 2 (0-"<<range<<"): ";
-                    cin>>s2;
-                    if (cin.fail()) 
-                    {
-                        tryAgain = true;
-                        clearCinError();
-                    }   
-                    else if(!(s2 >= 0 && s2 <= range) )
-                    {
-                        cout<<"Invalid input!!"<<endl;
-                        tryAgain = true;
-                    }
-                }while(tryAgain);
+                tryNo = 2;
+                s2 = getInput(tryNo, range);
             }
 
             
@@ -154,33 +135,16 @@ int main()
                 if(s1 + s2 >= 10)
                 {
                     total += s1 + s2;
-                    int extraPoint;
-                    
-                    bool tryAgain = false;
-                    do {
-                        tryAgain = false;
-                        //cout<<endl;
-                        cout<<"\nExtra chance (0-10): ";
-                        cin>>extraPoint;
-                        
-                        if (cin.fail()) 
-                        {
-                            tryAgain = true;
-                            clearCinError();
-                        }   
-                        else if(!(extraPoint >= 0 && extraPoint <= 10) )
-                        {
-                            cout<<"Invalid input!!"<<endl;
-                            tryAgain = true;
-                        }
-                    }while(tryAgain);
+                    tryNo = 3;
+                    range = 10;
+                    cout<<endl;
+                    int extraPoint = getInput(tryNo, range);
 
                     total += extraPoint;
                     printResult(scores,i);
                     cout<<"\n\t\t ::"<<extraPoint;
                     cout<<"    "<<total;
                 }
-                
             }
         }
     }
